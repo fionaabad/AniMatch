@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AniMatch</title>
+  <link rel="stylesheet" href="../CSS/landing_page.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h2>Iniciar Sesión</h2>
+      <form action="/login" methods="GET" id="inicio">
+        <input type="text" name="Nombre" placeholder="Nombre" />
+        <input type="password" name="Contrasenya" placeholder="Contraseña"/>
+        <button type="submit">Entrar</button>
+      </form>
+       <p>¿No tienes cuenta? <a href="#" onclick="toggleForm()">Regístrate</a></p>
+    </div>
+
+    <div class="form-container hidden" id="registerForm">
+      <h2>Registro</h2>
+      <form action="/register" method="POST" id="registro">
+        <input type="text" placeholder="Nombre" required />
+        <input type="password" placeholder="Contraseña" required />
+        <button type="submit">Registrarse</button>
+      </form>
+       <p>¿Ya tienes cuenta? <a href="#" onclick="toggleForm()">Inicia sesión</a></p>
+    </div>
+  </div>
+  <script src="../JS/landing_page.js"></script>
+</body>
+</html>
