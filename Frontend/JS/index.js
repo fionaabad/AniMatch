@@ -21,18 +21,22 @@ document.getElementById('formulario').addEventListener('submit', function(event)
   .then(result => {
     const tabla = document.createElement("table")
     const cabezera = document.createElement("thead")
-    const columna_1 = document.createElement("tr")
-    const columna_2= document.createElement("tr")
+    const filas = document.createElement("tr")
     const titulo_1 =  document.createElement("th")
     const titulo_2 = document.createElement("th")
     titulo_1.append("Anime")
     titulo_2.append("Puntuacion")
-    columna_1.appendChild(titulo_1)
-    columna_2.appendChild(titulo_2)
+    filas.appendChild(titulo_1)
+    filas.appendChild(titulo_2)
+    cabezera.appendChild(filas)
+    tabla.appendChild(cabezera)
+    result.forEach(element => {
+        const contenido = document.createElement("tbody")
+        const 
 
-
-
-  })
+        
+    });
+ })
   .catch(error => {
     console.error('Error en la petición:', error);
   });
