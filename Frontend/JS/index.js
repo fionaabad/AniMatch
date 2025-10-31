@@ -32,9 +32,15 @@ document.getElementById('formulario').addEventListener('submit', function(event)
     tabla.appendChild(cabezera)
     result.forEach(element => {
         const contenido = document.createElement("tbody")
-        const 
+        const fila = document.createElement("tr")
+        const columna = document.createElement("td")
+        const columna_2 = document.createElement("td")
+        columna.textContent = element.anime_id
+        columna_2.textContent = element.rating
+        fila.appendChild(columna)
+        fila.appendChild(columna_2)
+        contenido.appendChild(fila)
 
-        
     });
  })
   .catch(error => {
