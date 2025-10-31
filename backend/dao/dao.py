@@ -1,4 +1,3 @@
-# backend/dao/dao.py
 import mysql.connector
 
 class AnimatchDAO:
@@ -12,7 +11,7 @@ class AnimatchDAO:
             conn.GetConn().commit()
             return True
         except mysql.connector.IntegrityError:
-            # duplicado (si hay UNIQUE en `user`)
+            # duplicado (hemos puesto UNIQUE en 'user')
             return False
         except mysql.connector.Error as err:
             print("Error add_user:", err)
