@@ -19,7 +19,19 @@ document.getElementById('formulario').addEventListener('submit', function(event)
     return response.json();
   })
   .then(result => {
-    console.log('Respuesta del servidor:', result);
+    const tabla = document.createElement("table")
+    const cabezera = document.createElement("thead")
+    const columna_1 = document.createElement("tr")
+    const columna_2= document.createElement("tr")
+    const titulo_1 =  document.createElement("th")
+    const titulo_2 = document.createElement("th")
+    titulo_1.append("Anime")
+    titulo_2.append("Puntuacion")
+    columna_1.appendChild(titulo_1)
+    columna_2.appendChild(titulo_2)
+
+
+
   })
   .catch(error => {
     console.error('Error en la petición:', error);
