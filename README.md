@@ -5,7 +5,14 @@ El objetivo es poder registrarte, iniciar sesión y obtener recomendaciones seg�
 Está hecho con Python, Flask, MySQL y un poco de Pandas para el modelo de recomendación.
 
 ## Estructura del proyecto
-
+backend/
+ - api/           → Contiene la API Flask (login, registro y recomendaciones)
+ - console/       → Programa para probarlo desde la terminal
+ - dao/           → Conexión y acceso a la base de datos MySQL
+ - model/         → Entrenamiento y carga del modelo de recomendación
+ - data/          → Aquí van los CSV (anime.csv y rating.csv)
+ - models/        → Aquí se guarda el modelo entrenado
+ 
 ## Datos necesarios (CSV)
 
 Para usar el modelo necesitas descargar los archivos de datos:
