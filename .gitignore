@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pkl
+*.json
+
+# Fitxers de dades grans
+backend/data/
+backend/models/
+
+# Sistemes operatius
+.DS_Store
+Thumbs.db
+
+# Entorns virtuals
+venv/
+.env/
+
+dist/
+.dist/
+build/
