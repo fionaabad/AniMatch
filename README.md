@@ -5,7 +5,14 @@ El objetivo es poder registrarte, iniciar sesión y obtener recomendaciones seg�
 Está hecho con Python, Flask, MySQL y un poco de Pandas para el modelo de recomendación.
 
 ## Estructura del proyecto
-
+backend/
+ - api/           → Contiene la API Flask (login, registro y recomendaciones)
+ - console/       → Programa para probarlo desde la terminal
+ - dao/           → Conexión y acceso a la base de datos MySQ
+ - data/          → Aquí van los CSV (anime.csv y rating.csv)
+ - model/         → Entrenamiento y carga del modelo de recomendación
+ - models/        → Aquí se guarda el modelo entrenado
+ 
 ## Datos necesarios (CSV)
 
 Para usar el modelo necesitas descargar los archivos de datos:
@@ -32,7 +39,7 @@ Ese archivo es el que después usa la función `get_recommendations()` para gene
 ## Base de datos
 
 Es necesario tener una base de datos MySQL llamada **`animatch_db`**  
-(la puedes crear fácilmente con **MySQL Workbench** o desde la terminal).
+(la puedes crear fácilmente con **MySQL Workbench**.
 
 Dentro, crea una tabla llamada `users` con las siguientes columnas:
 
