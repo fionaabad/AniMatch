@@ -8,9 +8,9 @@ Está hecho con Python, Flask, MySQL y un poco de Pandas para el modelo de recom
 backend/
  - api/           → Contiene la API Flask (login, registro y recomendaciones)
  - console/       → Programa para probarlo desde la terminal
- - dao/           → Conexión y acceso a la base de datos MySQL
- - model/         → Entrenamiento y carga del modelo de recomendación
+ - dao/           → Conexión y acceso a la base de datos MySQ
  - data/          → Aquí van los CSV (anime.csv y rating.csv)
+ - model/         → Entrenamiento y carga del modelo de recomendación
  - models/        → Aquí se guarda el modelo entrenado
  
 ## Datos necesarios (CSV)
