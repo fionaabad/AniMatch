@@ -1,6 +1,6 @@
 function toggleForm() {
         document.querySelectorAll('.form-container').forEach(el => el.classList.toggle('hidden'));
-};
+}
 
 document.getElementById('registro').addEventListener('submit', function(event) {
   event.preventDefault(); 
@@ -45,7 +45,9 @@ document.getElementById('inicio').addEventListener('submit', function(event) {
   })
   .then(response => response.text())
   .then(result => {
-    document.body.innerHTML = result;
+    document.open();
+    document.write(result)
+    document.close();
   })
   .catch(error => {
     console.error('Error en la petición:', error);
