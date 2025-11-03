@@ -60,7 +60,7 @@ def login():
     if not user or user.get("password") != password:
         return jsonify({"error": "credenciales invalidas"}), 401
 
-    return jsonify({"message": "login ok", "username": user["username"], "role": user["role"]}), 200
+    return render_template("../Frontend/HTML/landing_page_2.js")
 
 
 @app.post("/obtener-recomendaciones")
