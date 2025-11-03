@@ -12,9 +12,7 @@ document.getElementById('registro').addEventListener('submit', function(event) {
 
   fetch('http://localhost:5000/register', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(data)
   })
   .then(response => {
@@ -32,21 +30,18 @@ document.getElementById('registro').addEventListener('submit', function(event) {
 document.getElementById('inicio').addEventListener('submit', function(event) {
     event.preventDefault()
 
-    const form = event.target;
-    const formData = new FormData(form);
+    const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
 
   fetch('http://localhost:5000/login', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(data)
   })
   .then(response => response.text())
   .then(result => {
     document.open();
-    document.write(result)
+    document.write(result);
     document.close();
   })
   .catch(error => {
