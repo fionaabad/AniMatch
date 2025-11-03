@@ -1,11 +1,14 @@
-   
+import os
 from dao.conexion_bd import Conexion
 from dao.dao import AnimatchDAO
 from flask import Flask, jsonify, request, render_template
 from model.model import get_recommendations, load_model
+from flask_cors import CORS
 
 
-app = Flask(__name__)
+template_dir = os.path.abspath("../Frontend/HTML")
+app = Flask(__name__, template_folder=template_dir)
+CORS(app)
 
 @app.get("/health")
 def health():
@@ -60,7 +63,7 @@ def login():
     if not user or user.get("password") != password:
         return jsonify({"error": "credenciales invalidas"}), 401
 
-    return render_template("../Frontend/HTML/landing_page_2.html")
+    return render_template("landing_page_2.html")
 
 
 @app.post("/obtener-recomendaciones")
