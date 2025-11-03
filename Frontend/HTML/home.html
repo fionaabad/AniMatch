@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AniMatch — Recomendaciones</title>
+  <link rel="stylesheet" href="/CSS/home.css" />
+</head>
+<body>
+  <header>
+    <nav><h1>AniMatch</h1></nav>
+  </header>
+
+  <main>
+    <section class="form-section">
+      <h2>Obtener recomendaciones</h2>
+
+      <div class="userbar">
+        <span id="userInfo">Usuario: —</span>
+        <!-- ✅ usamos id y no apuntamos a /auth -->
+        <a class="logout" href="#" id="logoutLink">Salir</a>
+      </div>
+
+      <div id="adminTools" class="admin-tools" style="display:none;">
+        <strong>Admin:</strong>
+        <button id="retrainBtn" class="btn-danger">Reentrenar modelo</button>
+        <span class="muted">Vuelve a leer los CSV y actualiza el modelo en memoria.</span>
+      </div>
+
+      <form id="formulario">
+        <input type="number" name="anime_id_1" placeholder="anime_id #1" required />
+        <input type="number" step="0.1" name="rating_1" placeholder="nota 1–10" required />
+        <input type="number" name="anime_id_2" placeholder="anime_id #2" required />
+        <input type="number" step="0.1" name="rating_2" placeholder="nota 1–10" required />
+        <div class="actions">
+          <button type="button" id="clearBtn" class="secondary">Limpiar</button>
+          <button type="submit">Recomendar</button>
+        </div>
+      </form>
+
+      <div id="msg" class="notice">Introduce dos animes y sus notas (1–10).</div>
+      <div id="resultado" class="results"></div>
+    </section>
+  </main>
+
+  <script src="/JS/home.js"></script>
+</body>
+</html>
