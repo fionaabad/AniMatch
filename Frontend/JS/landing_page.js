@@ -22,7 +22,7 @@ document.getElementById('registro').addEventListener('submit', function(event) {
     return response.json();
   })
   .then(result => {
-    console.log('Respuesta:', result);
+    alert(result);
   })
   .catch(error => {
     console.error('Error:', error);
