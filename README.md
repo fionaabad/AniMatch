@@ -12,6 +12,12 @@ backend/
  - data/          → Aquí van los CSV (anime.csv y rating.csv)
  - model/         → Entrenamiento y carga del modelo de recomendación
  - models/        → Aquí se guarda el modelo entrenado
+
+## Requerimientos
+Antes de ejecutar el proyecto, instla las dependencias necesarias:
+```bash
+pip install flask mysql-connector-python pandas
+```
  
 ## Datos necesarios (CSV)
 
@@ -76,3 +82,28 @@ python api/api.py
 ```bash
 python console/main.py
 ```
+
+## Modo administrador y reentrenamiento del modelo
+
+Si inicias sesión con:
+
+- usuario: admin
+- contraseña: admin
+
+En el menú aparecerá una opción adicional:
+
+`2. Reentrenar modelo`
+
+Esta opción permite volver a entrenar el modelo utilizando los nuevos archivos CSV  
+(`anime.csv` y `rating.csv`) sin necesidad de reiniciar el servidor.  
+Es útil si has modificado o reemplazado los archivos de datos y quieres actualizar las recomendaciones.
+
+Durante el reentrenamiento:
+
+- El modelo se recalcula completamente.  
+- Se guarda sobre el archivo existente:  
+  `backend/models/model_v1.0.pkl`  
+- El sistema comenzará a utilizar automáticamente el modelo actualizado.
+
+
+
