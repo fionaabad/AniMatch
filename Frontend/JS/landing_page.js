@@ -45,7 +45,7 @@ document.getElementById('inicio').addEventListener('submit', function(event) {
     document.close();
   })
   .catch(error => {
-    console.error('Error en la petición:', error);
+    alert('Error en la petición:', error);
   })
 });
 
