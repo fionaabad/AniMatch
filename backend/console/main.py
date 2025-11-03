@@ -1,4 +1,4 @@
-# main.py — versión simple con doble menú (corregida y funcional)
+# main.py — simple, con verificación de anime en el modelo
 import requests
 
 BASE_URL = "http://127.0.0.1:5000"
@@ -8,7 +8,6 @@ LOGGED_IN = False
 USERNAME = None
 
 def pedir_json(method, path, body=None):
-    """Llama a la API y devuelve (status_code, dict|None)."""
     url = f"{BASE_URL}{path}"
     try:
         r = requests.request(method, url, json=body, timeout=TIMEOUT)
@@ -35,7 +34,6 @@ def registrarse():
         print(data or {"error": "No se pudo registrar."})
 
 def iniciar_sesion():
-    """Inicia sesión y cambia el estado global."""
     print("\n--- Iniciar sesión ---")
     user = input("Usuario: ").strip()
     pw = input("Contraseña: ").strip()
@@ -48,23 +46,33 @@ def iniciar_sesion():
     else:
         print(data or {"error": "Login fallido. Revisa credenciales."})
 
+def existe_anime(anime_id:int) -> bool:
+    """Pregunta a la API si el anime_id está en el modelo."""
+    status, data = pedir_json("GET", f"/exists-anime/{anime_id}")
+    return (status == 200) and bool(data and data.get("exists") is True)
+
 def pedir_recomendaciones():
-    """Pide 2 animes con su nota y muestra las recomendaciones."""
     if not LOGGED_IN:
         print("Primero debes iniciar sesión.")
         return
-    print("\nIntroduce 2 animes con su nota (1–10).")
+
+    print("\nIntroduce 2 animes con su nota (1–10). Verificamos que existan en el modelo.")
     perfil = {}
     for i in range(1, 3):
-        # anime_id
+        # pedir anime_id válido y existente
         while True:
             raw_id = input(f"anime_id #{i}: ").strip()
             try:
                 aid = int(raw_id)
-                break
             except ValueError:
                 print("El id debe ser un número entero.")
-        # rating
+                continue
+            if not existe_anime(aid):
+                print("Ese anime_id NO está en el modelo. Prueba otro.")
+                continue
+            break
+
+        # pedir nota válida
         while True:
             raw_rating = input("nota (1–10): ").strip()
             try:
@@ -74,6 +82,7 @@ def pedir_recomendaciones():
             except ValueError:
                 pass
             print("La nota debe ser un número entre 1 y 10.")
+
         perfil[aid] = r
 
     status, data = pedir_json("POST", "/obtener-recomendaciones", perfil)
@@ -97,7 +106,6 @@ def pedir_recomendaciones():
         print(f"{aid:>8}  {score:>7}  {name}")
 
 def cerrar_sesion():
-    """Cierra sesión y limpia las variables globales."""
     global LOGGED_IN, USERNAME
     LOGGED_IN = False
     USERNAME = None
@@ -118,7 +126,7 @@ def menu_usuario():
     return input("Elige: ").strip()
 
 def main():
-    print("AniMatch (console) — versión simple")
+    print("AniMatch (console) — simple con verificación de anime")
     while True:
         if not LOGGED_IN:
             opcion = menu_acceso()
