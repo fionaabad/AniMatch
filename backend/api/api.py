@@ -31,32 +31,40 @@ def registrarse():
     if status == 201:
         print("Registro correcto. Ahora inicia sesión.")
     else:
-        print(data or {"error": "No se pudo registrar."})
+        return jsonify({"error": "username ya existe o error al crear"}), 409
 
-def iniciar_sesion():
-    print("\n--- Iniciar sesión ---")
-    user = input("Usuario: ").strip()
-    pw = input("Contraseña: ").strip()
-    status, data = pedir_json("POST", "/login", {"username": user, "password": pw})
-    if status == 200:
-        global LOGGED_IN, USERNAME
-        LOGGED_IN = True
-        USERNAME = data.get("username", user)
-        print(f"Sesión iniciada. ¡Hola, {USERNAME}!")
-    else:
-        print(data or {"error": "Login fallido. Revisa credenciales."})
+@app.post("/login")
+def login():
+    data = request.get_json(silent=True) or {}
+    username = (data.get("username") or "").strip()
+    password = (data.get("password") or "").strip()
 
-def existe_anime(anime_id:int) -> bool:
-    """Pregunta a la API si el anime_id está en el modelo."""
-    status, data = pedir_json("GET", f"/exists-anime/{anime_id}")
-    return (status == 200) and bool(data and data.get("exists") is True)
+    if not username or not password:
+        return jsonify({"error": "username y password son obligatorios"}), 400
 
-def pedir_recomendaciones():
-    if not LOGGED_IN:
-        print("Primero debes iniciar sesión.")
-        return
+    conn = Conexion()
+    try:
+        user = AnimatchDAO.get_user_by_username(username, conn)
+    finally:
+        try:
+            conn.GetConn().close()
+        except:
+            pass
 
-    print("\nIntroduce 2 animes con su nota (1–10). Verificamos que existan en el modelo.")
+    if not user or user.get("password") != password:
+        return jsonify({"error": "credenciales invalidas"}), 401
+
+    return jsonify({"message": "login ok", "username": user["username"], "role": user["role"]}), 200
+
+
+@app.post("/obtener-recomendaciones")
+def obtener_recomendaciones():
+    data = request.get_json(silent=True) # llegim el missatge
+
+    if not data or not isinstance(data, dict):
+        return jsonify({"error": "Has d'enviar un JSON amb els teus animes i puntuacions"}), 400
+
+    # Convertim les claus i valors a números (int i float)
     perfil = {}
     for i in range(1, 3):
         # pedir anime_id válido y existente
