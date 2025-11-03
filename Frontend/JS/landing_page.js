@@ -34,9 +34,7 @@ document.getElementById('inicio').addEventListener('submit', function(event) {
 
     const form = event.target;
     const formData = new FormData(form);
-
-  // Convertimos FormData a un objeto plano
-  const data = Object.fromEntries(formData.entries());
+    const data = Object.fromEntries(formData.entries());
 
   fetch('http://localhost:5000/login', {
     method: 'POST',
