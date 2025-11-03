@@ -10,7 +10,7 @@ document.getElementById('registro').addEventListener('submit', function(event) {
 
   const data = Object.fromEntries(formData.entries());
 
-  fetch('http://localhost:5000/login', {
+  fetch('http://localhost:5000/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -22,10 +22,10 @@ document.getElementById('registro').addEventListener('submit', function(event) {
     return response.json();
   })
   .then(result => {
-    console.log('Respuesta del servidor:', result);
+    console.log('Respuesta:', result);
   })
   .catch(error => {
-    console.error('Error en la petición:', error);
+    console.error('Error:', error);
   });
 });
 
@@ -45,17 +45,13 @@ document.getElementById('inicio').addEventListener('submit', function(event) {
     },
     body: JSON.stringify(data)
   })
-  .then(response => {
-    if (!response.ok) throw new Error('Error en la respuesta');
-    return response.json();
-  })
+  .then(response => response.text())
   .then(result => {
-    console.log('Respuesta del servidor:', result);
-    // Aquí puedes redirigir o mostrar un mensaje
+    document.body.innerHTML = result;
   })
   .catch(error => {
     console.error('Error en la petición:', error);
-  });
+  })
 });
 
 
