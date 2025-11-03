@@ -39,7 +39,7 @@ Ese archivo es el que después usa la función `get_recommendations()` para gene
 ## Base de datos
 
 Es necesario tener una base de datos MySQL llamada **`animatch_db`**  
-(la puedes crear fácilmente con **MySQL Workbench**.
+(la puedes crear fácilmente con **MySQL Workbench**.)
 
 Dentro, crea una tabla llamada `users` con las siguientes columnas:
 
@@ -76,8 +76,3 @@ python api/api.py
 ```bash
 python console/main.py
 ```
-
-
-
-
-

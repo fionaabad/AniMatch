@@ -1,141 +1,150 @@
+# main.py — versión simple con doble menú (corregida y funcional)
 import requests
 
 BASE_URL = "http://127.0.0.1:5000"
-TIMEOUT = 10  # por si la api tarda o peta
+TIMEOUT = 10
 
-def pedir_json_y_mostrar(method, path, json=None):
-    # hace la peticion y muestra algo sencillo
+LOGGED_IN = False
+USERNAME = None
+
+def pedir_json(method, path, body=None):
+    """Llama a la API y devuelve (status_code, dict|None)."""
     url = f"{BASE_URL}{path}"
     try:
-        resp = requests.request(method, url, json=json, timeout=TIMEOUT)
-    except requests.RequestException as e:
-        print(f"[error] no se pudo conectar: {e}")
-        return None, None
-
-    try:
-        data = resp.json()
-    except ValueError:
-        print(f"[{resp.status_code}] (no json)\n{resp.text}")
-        return resp.status_code, None
-
-    print(f"[{resp.status_code}] {data}")
-    return resp.status_code, data
-
-def registrar():
-    username = input("nombre de usuario: ").strip()
-    password = input("contrasena (min 8): ").strip()
-    status, _ = pedir_json_y_mostrar("POST", "/register", {"username": username, "password": password})
-    return status == 201
-
-def login():
-    username = input("nombre de usuario: ").strip()
-    password = input("contrasena: ").strip()
-    status, data = pedir_json_y_mostrar("POST", "/login", {"username": username, "password": password})
-    if status == 200 and data:
-        print(f"hola {data.get('username')} (rol: {data.get('role')})")
-        return data.get("username"), data.get("role")
-    return None, None
-
-def pedir_id_valido(prompt):
-    # pide un id y comprueba que existe en el modelo
-    while True:
-        raw = input(prompt).strip()
-        try:
-            aid = int(raw)
-        except ValueError:
-            print("[error] el id debe ser un numero entero")
-            continue
-
-        try:
-            r = requests.get(f"{BASE_URL}/exists-anime/{aid}", timeout=TIMEOUT)
-        except requests.RequestException as e:
-            print(f"[error] no se pudo conectar a la api: {e}")
-            continue
-
+        r = requests.request(method, url, json=body, timeout=TIMEOUT)
         try:
             data = r.json()
         except ValueError:
-            print("respuesta no json:\n", r.text)
-            continue
-
-        if r.status_code == 200 and data.get("exists") is True:
-            return aid
-        else:
-            print("este anime_id no esta en el modelo, prueba otro")
-
-def pedir_rating(prompt):
-    # pide una nota 1 al 10
-    while True:
-        raw = input(prompt).strip()
-        try:
-            rating = float(raw)
-            if 1 <= rating <= 10:
-                return rating
-        except ValueError:
-            pass
-        print("la nota debe ser un numero entre 1 y 10")
-
-def obtener_recomendaciones():
-    print("Escribe tus 2 animes y su puntación sobre 10 (comprobamos que existan en el modelo)")
-    a1 = pedir_id_valido("primer anime_id: ")
-    n1 = pedir_rating("nota 1 (1-10): ")
-    a2 = pedir_id_valido("segundo anime_id: ")
-    n2 = pedir_rating("nota 2 (1-10): ")
-
-    payload = {a1: n1, a2: n2}
-    try:
-        resp = requests.post(f"{BASE_URL}/obtener-recomendaciones", json=payload, timeout=TIMEOUT)
+            data = None
+        return r.status_code, data
     except requests.RequestException as e:
-        print(f"[error] no se pudo conectar a la api: {e}")
-        return
+        print(f"[error] No se pudo conectar con la API: {e}")
+        return None, None
 
-    print(f"[{resp.status_code}]")
-    try:
-        data = resp.json()
-    except ValueError:
-        print("respuesta no json:\n", resp.text)
+def registrarse():
+    print("\n--- Registro ---")
+    username = input("Usuario: ").strip()
+    password = input("Contraseña (min 8): ").strip()
+    if len(password) < 8:
+        print("La contraseña debe tener al menos 8 caracteres.")
         return
-
-    if resp.status_code == 200 and data:
-        print("recomendaciones:")
-        for rec in data:
-            aid = rec.get("anime_id")
-            name = rec.get("name", "(sin nombre)")
-            score = rec.get("score", 0)
-            try:
-                print(f"- {aid} | {name} | {float(score):.2f}")
-            except (TypeError, ValueError):
-                print(f"- {aid} | {name} | {score}")
-    elif resp.status_code == 200 and not data:
-        print("sin recomendaciones para esos ids, prueba otros")
+    status, data = pedir_json("POST", "/register", {"username": username, "password": password})
+    if status == 201:
+        print("Registro correcto. Ahora inicia sesión.")
     else:
-        print("error:", data)
+        print(data or {"error": "No se pudo registrar."})
 
-def mostrar_menu():
-    print("\n--- menu ---")
-    print("1. registrarse")
-    print("2. iniciar sesion")
-    print("3. obtener recomendaciones")
-    print("0. salir")
-    return input("elige opcion: ").strip()
+def iniciar_sesion():
+    """Inicia sesión y cambia el estado global."""
+    print("\n--- Iniciar sesión ---")
+    user = input("Usuario: ").strip()
+    pw = input("Contraseña: ").strip()
+    status, data = pedir_json("POST", "/login", {"username": user, "password": pw})
+    if status == 200:
+        global LOGGED_IN, USERNAME
+        LOGGED_IN = True
+        USERNAME = data.get("username", user)
+        print(f"Sesión iniciada. ¡Hola, {USERNAME}!")
+    else:
+        print(data or {"error": "Login fallido. Revisa credenciales."})
+
+def pedir_recomendaciones():
+    """Pide 2 animes con su nota y muestra las recomendaciones."""
+    if not LOGGED_IN:
+        print("Primero debes iniciar sesión.")
+        return
+    print("\nIntroduce 2 animes con su nota (1–10).")
+    perfil = {}
+    for i in range(1, 3):
+        # anime_id
+        while True:
+            raw_id = input(f"anime_id #{i}: ").strip()
+            try:
+                aid = int(raw_id)
+                break
+            except ValueError:
+                print("El id debe ser un número entero.")
+        # rating
+        while True:
+            raw_rating = input("nota (1–10): ").strip()
+            try:
+                r = float(raw_rating)
+                if 1 <= r <= 10:
+                    break
+            except ValueError:
+                pass
+            print("La nota debe ser un número entre 1 y 10.")
+        perfil[aid] = r
+
+    status, data = pedir_json("POST", "/obtener-recomendaciones", perfil)
+    if status != 200 or data is None:
+        print(data or {"error": "No se pudieron obtener recomendaciones."})
+        return
+    if not data:
+        print("Sin resultados. Prueba con otros animes.")
+        return
+
+    print("\nRecomendaciones:")
+    print(f"{'anime_id':>8}  {'score':>7}  name")
+    for rec in data:
+        aid = rec.get("anime_id")
+        name = rec.get("name", "(sin nombre)")
+        score = rec.get("score", 0)
+        try:
+            score = f"{float(score):.2f}"
+        except Exception:
+            score = str(score)
+        print(f"{aid:>8}  {score:>7}  {name}")
+
+def cerrar_sesion():
+    """Cierra sesión y limpia las variables globales."""
+    global LOGGED_IN, USERNAME
+    LOGGED_IN = False
+    USERNAME = None
+    print("Sesión cerrada.")
+
+def menu_acceso():
+    print("\n--- Menú ---")
+    print("1. Registrarse")
+    print("2. Iniciar sesión")
+    print("0. Salir")
+    return input("Elige: ").strip()
+
+def menu_usuario():
+    print(f"\n--- Menú (usuario: {USERNAME}) ---")
+    print("1. Obtener recomendaciones")
+    print("2. Cerrar sesión")
+    print("0. Salir")
+    return input("Elige: ").strip()
 
 def main():
+    print("AniMatch (console) — versión simple")
     while True:
-        op = mostrar_menu()
-        if op == "1":
-            registrar()
-        elif op == "2":
-            login()
-        elif op == "3":
-            obtener_recomendaciones()
-        elif op == "0":
-            print("chao :)")
-            break
+        if not LOGGED_IN:
+            opcion = menu_acceso()
+            if opcion == "1":
+                registrarse()
+            elif opcion == "2":
+                iniciar_sesion()
+            elif opcion == "0":
+                print("¡Adiós!")
+                break
+            else:
+                print("Opción no válida.")
         else:
-            print("opcion no valida")
+            opcion = menu_usuario()
+            if opcion == "1":
+                pedir_recomendaciones()
+            elif opcion == "2":
+                cerrar_sesion()
+            elif opcion == "0":
+                print("¡Adiós!")
+                break
+            else:
+                print("Opción no válida.")
 
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\ncerrando...")
+        print("\nCerrando...")

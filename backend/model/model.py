@@ -126,6 +126,6 @@ if __name__ == "__main__":
     print("Executant prova rapida de model...")
     train_model()
 
-    perfil = {11061: 10, 2476: 1}  # Hunter x Hunter = 10, School Days = 1
+1    perfil = {11061: 10, 2476: 1}  # Hunter x Hunter = 10, School Days = 1
     recom = get_recommendations(perfil)
     print(recom.head())
