@@ -86,20 +86,71 @@ main {
 .btn-danger:hover { background: #dc2626; }
 .muted { color: #6b7280; font-size: .9rem; }
 
-/* Formulario */
+/* -------- Panel de ejemplos (full width, fuera del form) -------- */
+.examples {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 14px;       /* separa del formulario */
+}
+.examples-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+.chip-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 6px;
+  padding: 0;
+}
+.chip {
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  background: #fff;
+  line-height: 1;
+}
+
+/* Accesibilidad: etiquetas ocultas visualmente (si las usas) */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+
+/* -------- Formulario en cuadrícula -------- */
 form {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: .8rem;
 }
-form input[type="number"] {
+
+/* Inputs */
+form input[type="number"],
+form input[type="text"] {
   padding: .8rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 1rem;
+  width: 100%;
+  /* << sin height:100% para que NO crezcan por filas altas >> */
+  outline: none;
 }
+form input:focus {
+  border-color: #2148f7;
+  box-shadow: 0 0 0 3px rgba(33,72,247,0.15);
+}
+
+/* Botones */
 .actions {
-  grid-column: 1/-1;
+  grid-column: 1 / -1;
   display: flex;
   justify-content: flex-end;
   gap: .6rem;
@@ -113,9 +164,10 @@ button[type="submit"], .secondary {
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
-  transition: background .2s ease;
+  transition: background .2s ease, transform .05s ease;
 }
 button[type="submit"]:hover { background-color: #1535bd; }
+button[type="submit"]:active { transform: translateY(1px); }
 .secondary { background: #e5e7eb; color: #111827; }
 .secondary:hover { background: #d1d5db; }
 
@@ -150,7 +202,7 @@ button[type="submit"]:hover { background-color: #1535bd; }
 }
 .table tbody tr:hover { background: #f8fafc; }
 
-/* Responsive */
+/* -------- Responsive -------- */
 @media (max-width: 640px) {
   form { grid-template-columns: 1fr; }
 }
