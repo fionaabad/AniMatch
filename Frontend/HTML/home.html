@@ -27,15 +27,17 @@
       </div>
 
       <form id="formulario">
-        <input type="number" name="anime_id_1" placeholder="anime_id #1" required />
+        <input type="text" name="anime_1" placeholder="anime #1 (nombre o id)" required />
         <input type="number" step="0.1" name="rating_1" placeholder="nota 1–10" required />
-        <input type="number" name="anime_id_2" placeholder="anime_id #2" required />
+        <input type="text" name="anime_2" placeholder="anime #2 (nombre o id)" required />
         <input type="number" step="0.1" name="rating_2" placeholder="nota 1–10" required />
         <div class="actions">
           <button type="button" id="clearBtn" class="secondary">Limpiar</button>
           <button type="submit">Recomendar</button>
         </div>
       </form>
+
+      <ul id="suggestions" class="hidden" style="margin-top:.5rem;"></ul>
 
       <div id="msg" class="notice">Introduce dos animes y sus notas (1–10).</div>
       <div id="resultado" class="results"></div>
