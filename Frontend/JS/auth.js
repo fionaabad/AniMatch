@@ -6,7 +6,7 @@ function toggleForm() {
 };
 
 
-window.toggleForm = toggleForm();
+window.toggleForm = toggleForm;
 
 
 function showAlert(msg) { alert(msg); }
