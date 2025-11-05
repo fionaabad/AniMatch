@@ -1,5 +1,4 @@
-// ===== Config =====
-const API_BASE = ""; // mismo origen (http://localhost:5000)
+const API_BASE = "";
 
 
 function toggleForm() {
