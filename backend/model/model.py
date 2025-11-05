@@ -18,7 +18,7 @@ CURRENT_MODEL = os.path.join(MODELS_DIR, "current_model.json")
 # PARÀMETRES DE FILTRE
 MIN_RATINGS_ITEM = 100      # mínim de valoracions per anime
 MIN_RATINGS_USER = 5        # mínim de valoracions per usuari
-MIN_PERIODS_CORR = 500      # mínim d’usuaris comuns per calcular correlació
+MIN_PERIODS_CORR = 100      # mínim d’usuaris comuns per calcular correlació
 
 
 # ENTRENAR ALGORITME
