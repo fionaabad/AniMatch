@@ -32,7 +32,6 @@ body {
   width: 640px;
 }
 
-.hidden { display: none; }
 
 h1, h2 {
   margin: 0 0 1rem 0;
@@ -40,8 +39,6 @@ h1, h2 {
   color: #333;
 }
 
-/* ===== Formularios (login/registro) ===== */
-.form-container { display: block; }
 
 form {
   display: flex;
@@ -196,7 +193,7 @@ a:hover { text-decoration: underline; }
 }
 
 /* Pequeños ajustes responsive */
-@media (max-width: 720px) {
+/* @media (max-width: 720px) {
   .recs-container { width: 92vw; }
   .recs-form {
     grid-template-columns: 1fr;
@@ -206,5 +203,5 @@ a:hover { text-decoration: underline; }
 }
 
 /* Microdetalles */
-.muted { color: #6b7280; font-size: .9rem; }
-.center { text-align: center; }
+/* .muted { color: #6b7280; font-size: .9rem; }
+.center { text-align: center; } */ 

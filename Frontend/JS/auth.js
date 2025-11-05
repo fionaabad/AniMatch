@@ -1,11 +1,14 @@
 // ===== Config =====
 const API_BASE = ""; // mismo origen (http://localhost:5000)
 
-// ===== Helpers =====
+
 function toggleForm() {
   document.querySelectorAll(".form-container").forEach(el => el.classList.toggle("hidden"));
-}
-window.toggleForm = toggleForm;
+};
+
+
+window.toggleForm = toggleForm();
+
 
 function showAlert(msg) { alert(msg); }
 

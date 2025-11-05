@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AniMatch — Acceso</title>
   <!-- Rutas absolutas y nombre correcto del CSS -->
-  <link rel="stylesheet" href="/CSS/auth.css" />
+  <link rel="stylesheet" href="../CSS/auth.css" />
 </head>
 <body id="contenedor">
   <div class="container">
-    <!-- Login -->
-    <div class="form-container" id="loginForm">
+    <div class="form-container hidden" id="loginForm">
       <h2>Iniciar Sesión</h2>
       <form id="inicio">
         <input type="text" name="username" placeholder="Nombre" required/>
@@ -20,8 +19,8 @@
       <p>¿No tienes cuenta? <a href="#" onclick="toggleForm()">Regístrate</a></p>
     </div>
 
-    <!-- Registro (oculto al inicio) -->
-    <div class="form-container hidden" id="registerForm">
+  
+    <div class="form-container" id="registerForm">
       <h2>Registro</h2>
       <form id="registro">
         <input type="text" name="username" placeholder="Nombre" required />
@@ -31,8 +30,6 @@
       <p>¿Ya tienes cuenta? <a href="#" onclick="toggleForm()">Inicia sesión</a></p>
     </div>
   </div>
-
-  <!-- Ruta absoluta y nombre correcto del JS -->
-  <script src="/JS/auth.js"></script>
+   <script src="../JS/auth.js"></script>
 </body>
 </html>
