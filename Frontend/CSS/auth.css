@@ -110,59 +110,6 @@ a:hover { text-decoration: underline; }
   background: #dc2626;
 }
 
-/* ===== Vista Recomendaciones ===== */
-.recs-form {
-  display: grid;
-  grid-template-columns: 1fr 110px;
-  gap: .6rem 1rem;
-  align-items: center;
-  margin-top: .5rem;
-}
-
-/* Dos filas: (anime_id, rating) x2 */
-.recs-form .row {
-  display: contents; /* permite que grid posicione directamente los hijos */
-}
-
-.recs-form .field {
-  display: flex;
-  gap: .6rem;
-  grid-column: 1 / -1;
-}
-
-.recs-form .field > input[type="number"] {
-  flex: 1;
-}
-
-.recs-form .actions {
-  grid-column: 1 / -1;
-  display: flex;
-  justify-content: flex-end;
-  gap: .6rem;
-  margin-top: .2rem;
-}
-
-.secondary {
-  background: #e5e7eb;
-  color: #111827;
-}
-.secondary:hover {
-  background: #d1d5db;
-}
-
-/* Mensajes */
-.alert {
-  margin-top: .8rem;
-  padding: .75rem .9rem;
-  border-radius: 8px;
-  font-size: .95rem;
-  line-height: 1.2;
-}
-
-.alert.info    { background: #eef2ff; color: #3730a3; }    /* indigo-800 */
-.alert.success { background: #ecfdf5; color: #065f46; }    /* emerald-900 */
-.alert.error   { background: #fef2f2; color: #991b1b; }    /* red-800 */
-
 /* Resultados */
 .results {
   margin-top: 1rem;

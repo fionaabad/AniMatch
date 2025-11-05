@@ -15,16 +15,16 @@
         <input type="password" name="password" placeholder="Contraseña" required/>
         <button type="submit">Entrar</button>
       </form>
-      <p>¿No tienes cuenta? <a href="#" onclick="toggleForm()">Regístrate</a></p>
+      <p>¿No tienes cuenta? <a onclick="toggleForm()">Regístrate</a></p>
     </div>
-    <div class="form-container" id="registerForm">
+    <div class="form-container hidden" id="registerForm">
       <h2>Registro</h2>
       <form id="registro">
         <input type="text" name="username" placeholder="Nombre" required />
         <input type="password" name="password" placeholder="Contraseña (min 8)" required />
         <button type="submit">Registrarse</button>
       </form>
-      <p>¿Ya tienes cuenta? <a href="#" onclick="toggleForm()">Inicia sesión</a></p>
+      <p>¿Ya tienes cuenta? <a onclick="toggleForm()">Inicia sesión</a></p>
     </div>
   </div>
    <script src="../JS/auth.js"></script>
