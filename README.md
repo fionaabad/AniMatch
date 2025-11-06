@@ -75,7 +75,7 @@ Por defecto, la conexión en el código usa:
 
 *(puedes cambiarlo en `dao/conexion_bd.py` si lo necesitas)*
 
-## Cómo ejecutarlo
+## Cómo ejecutarlo por consola
 
 ### 1. Crear el modelo (solo la primera vez)
 ```bash
