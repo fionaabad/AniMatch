@@ -1,17 +1,8 @@
-const API_BASE = "";
-
 
 function toggleForm() {
   document.querySelectorAll(".form-container").forEach(el => el.classList.toggle("hidden"));
 };
 
-
-window.toggleForm = toggleForm();
-
-
-function showAlert(msg) { alert(msg); }
-
-// ===== Registro =====
 const formRegister = document.getElementById("registro");
 if (formRegister) {
   formRegister.addEventListener("submit", async (event) => {
@@ -24,7 +15,7 @@ if (formRegister) {
     }
 
     try {
-      const resp = await fetch(`${API_BASE}/register`, {
+      const resp = await fetch('http://localhost:500/register', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
@@ -44,7 +35,7 @@ if (formRegister) {
   });
 }
 
-// ===== Login =====
+
 const formLogin = document.getElementById("inicio");
 if (formLogin) {
   formLogin.addEventListener("submit", async (event) => {
@@ -57,7 +48,7 @@ if (formLogin) {
     }
 
     try {
-      const resp = await fetch(`${API_BASE}/login`, {
+      const resp = await fetch(`http://localhost:5000/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)

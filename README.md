@@ -83,16 +83,50 @@ python api/api.py
 python console/main.py
 ```
 
-## Modo administrador y reentrenamiento del modelo
+## Acceder desde el Frontend (web)
 
-Si inicias sesión con:
+Además de la consola, **AniMatch** incluye una interfaz web sencilla (HTML, CSS y JavaScript)  
+para registrarte, iniciar sesión y obtener recomendaciones de forma visual.
+
+### Estructura del Frontend
+Frontend/
+ - HTML/
+  - auth.html → Pantalla de login / registro
+  - home.html → Página principal (recomendaciones)
+ - CSS/
+  - auth.css
+  - home.css
+ - JS/
+  - auth.js  
+  - home.js
+
+### Cómo usarlo
+
+1. **Arranca la API Flask** (como en los pasos anteriores):
+   ```bash
+   python api/api.py
+   ```
+2. **Abre el navegador en:**
+`http://127.0.0.1:5000/`
+Verás la pantalla de Auth (login / registro).
+Al iniciar sesión, serás redirigido automáticamente a Home.
+
+### **Qué puedes hacer desde la web**
+- Iniciar sesión o registrarte con tu usuario de la base de datos.
+- Pedir recomendaciones desde un formulario que admite ID o nombre de anime:
+    - Puedes mezclar entradas, por ejemplo:
+ `{ "Naruto": 9.0, "20": 8.5 }`
+- Ver un panel de ejemplos (solo informativo) con títulos populares para orientarte.
+
+## Modo administrador y reentrenamiento del modelo
+Si inicias sesión, tanto en cosola como en la web, con:
 
 - usuario: admin
 - contraseña: admin
 
 En el menú aparecerá una opción adicional:
 
-`2. Reentrenar modelo`
+`Reentrenar modelo`
 
 Esta opción permite volver a entrenar el modelo utilizando los nuevos archivos CSV  
 (`anime.csv` y `rating.csv`) sin necesidad de reiniciar el servidor.  
@@ -104,6 +138,9 @@ Durante el reentrenamiento:
 - Se guarda sobre el archivo existente:  
   `backend/models/model_v1.0.pkl`  
 - El sistema comenzará a utilizar automáticamente el modelo actualizado.
+- **Importante:** este proceso puede tardar varios minutos dependiendo del tamaño de los datos  
+  y de la potencia del equipo. **Ten paciencia** y espera a que finalice antes de hacer nuevas peticiones.
+
 
 
 
