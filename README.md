@@ -13,6 +13,17 @@ backend/
  - model/         → Entrenamiento y carga del modelo de recomendación
  - models/        → Aquí se guarda el modelo entrenado
 
+Frontend/
+ - HTML/
+   - auth.html → Pantalla de login / registro
+   - home.html → Página principal (recomendaciones)
+ - CSS/
+   - auth.css
+   - home.css
+ - JS/
+   - auth.js  
+   - home.js
+
 ## Requerimientos
 Antes de ejecutar el proyecto, instla las dependencias necesarias:
 ```bash
@@ -87,18 +98,6 @@ python console/main.py
 
 Además de la consola, **AniMatch** incluye una interfaz web sencilla (HTML, CSS y JavaScript)  
 para registrarte, iniciar sesión y obtener recomendaciones de forma visual.
-
-### Estructura del Frontend
-Frontend/
- - HTML/
-  - auth.html → Pantalla de login / registro
-  - home.html → Página principal (recomendaciones)
- - CSS/
-  - auth.css
-  - home.css
- - JS/
-  - auth.js  
-  - home.js
 
 ### Cómo usarlo
 
